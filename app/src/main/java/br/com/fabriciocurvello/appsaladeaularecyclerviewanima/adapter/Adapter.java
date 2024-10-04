@@ -8,9 +8,18 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.List;
+
 import br.com.fabriciocurvello.appsaladeaularecyclerviewanima.R;
+import br.com.fabriciocurvello.appsaladeaularecyclerviewanima.model.Disciplina;
 
 public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder>{
+
+    private List<Disciplina> listaDisciplinas;
+
+    public Adapter(List<Disciplina> lista) {
+        this.listaDisciplinas = lista;
+    }
 
     @NonNull
     @Override
@@ -23,16 +32,18 @@ public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder>{
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         // Método para exibir os itens da lista
-        holder.disciplina.setText("Sistemas Distribuídos e Mobile");
-        holder.professor.setText("Fabrício Curvello");
-        holder.diaSemana.setText("QUI");
-        holder.sala.setText("REMOTO");
+
+        Disciplina d = listaDisciplinas.get( position );
+        holder.disciplina.setText( d.getNomeDisciplina() );
+        holder.professor.setText( d.getProfessor() );
+        holder.diaSemana.setText( d.getDiaSemana() );
+        holder.sala.setText( d.getSala() );
     }
 
     @Override
     public int getItemCount() {
         //Quantidade de itens a ser exibida
-        return 50;
+        return listaDisciplinas.size();
     }
 
     // Classe interna
