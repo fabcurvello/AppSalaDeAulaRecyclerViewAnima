@@ -1,7 +1,10 @@
 package br.com.fabriciocurvello.appsaladeaularecyclerviewanima.activity;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,6 +21,7 @@ import java.util.List;
 import br.com.fabriciocurvello.appsaladeaularecyclerviewanima.R;
 import br.com.fabriciocurvello.appsaladeaularecyclerviewanima.adapter.Adapter;
 import br.com.fabriciocurvello.appsaladeaularecyclerviewanima.model.Disciplina;
+import br.com.fabriciocurvello.appsaladeaularecyclerviewanima.util.RecyclerItemClickListener;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -52,6 +56,40 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayout.VERTICAL));
 
         recyclerView.setAdapter( adapter );
+
+        // evento de clique
+        recyclerView.addOnItemTouchListener(
+                new RecyclerItemClickListener(
+                        getApplicationContext(),
+                        recyclerView,
+                        new RecyclerItemClickListener.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(View view, int position) {
+                                // CLIQUE SIMPLES - Exibir dia da semana e sala
+                                Disciplina d = disciplinas.get( position );
+
+                                Toast.makeText(MainActivity.this,
+                                        d.getDiaSemana() + " - " + d.getSala(),
+                                        Toast.LENGTH_SHORT).show();
+                            }
+
+                            @Override
+                            public void onLongItemClick(View view, int position) {
+                                // CLIQUE LONGO - Exibir nome da disciplina e professor
+                                Disciplina d = disciplinas.get( position );
+
+                                Toast.makeText(MainActivity.this,
+                                        d.getNomeDisciplina() + " - " + d.getProfessor(),
+                                        Toast.LENGTH_SHORT).show();
+                            }
+
+                            @Override
+                            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+                            }
+                        }
+                )
+        );
 
     } // fim do onCreate()
 
